@@ -1,6 +1,6 @@
 package com.badminton.ui.swing;
 
-import com.badminton.persistence.InMemoryDB;
+import com.badminton.persistence.JsonDB;
 import com.badminton.service.*;
 import com.badminton.util.DefaultFeePolicy;
 
@@ -15,7 +15,7 @@ import java.awt.event.ActionListener;
 public class MainFrame extends JFrame {
     private CardLayout cardLayout;
     private JPanel mainPanel;
-    private InMemoryDB db;
+    private JsonDB db;
     private UserService userService;
     private AdminService adminService;
     private BookingService bookingService;
@@ -33,7 +33,7 @@ public class MainFrame extends JFrame {
     }
 
     private void initializeServices() {
-        db = InMemoryDB.loadFromFile();
+        db = JsonDB.loadFromFile();
         DefaultFeePolicy feePolicy = new DefaultFeePolicy();
         userService = new UserService(db);
         bookingService = new BookingService(db, feePolicy);
@@ -47,6 +47,7 @@ public class MainFrame extends JFrame {
 
     private void initializeDefaultData() {
         if (db.getCourtCount() == 0) {
+            // 单打场地
             db.addCourt(new com.badminton.model.Court("C001", 
                 com.badminton.model.CourtType.SINGLES, 
                 com.badminton.model.CourtStatus.AVAILABLE, 0));
@@ -54,9 +55,22 @@ public class MainFrame extends JFrame {
                 com.badminton.model.CourtType.SINGLES, 
                 com.badminton.model.CourtStatus.AVAILABLE, 0));
             db.addCourt(new com.badminton.model.Court("C003", 
-                com.badminton.model.CourtType.DOUBLES, 
+                com.badminton.model.CourtType.SINGLES, 
                 com.badminton.model.CourtStatus.AVAILABLE, 0));
             db.addCourt(new com.badminton.model.Court("C004", 
+                com.badminton.model.CourtType.SINGLES, 
+                com.badminton.model.CourtStatus.AVAILABLE, 0));
+            // 双打场地
+            db.addCourt(new com.badminton.model.Court("C005", 
+                com.badminton.model.CourtType.DOUBLES, 
+                com.badminton.model.CourtStatus.AVAILABLE, 0));
+            db.addCourt(new com.badminton.model.Court("C006", 
+                com.badminton.model.CourtType.DOUBLES, 
+                com.badminton.model.CourtStatus.AVAILABLE, 0));
+            db.addCourt(new com.badminton.model.Court("C007", 
+                com.badminton.model.CourtType.DOUBLES, 
+                com.badminton.model.CourtStatus.AVAILABLE, 0));
+            db.addCourt(new com.badminton.model.Court("C008", 
                 com.badminton.model.CourtType.DOUBLES, 
                 com.badminton.model.CourtStatus.AVAILABLE, 0));
             db.saveToFile();
@@ -81,7 +95,7 @@ public class MainFrame extends JFrame {
         // 主面板使用CardLayout
         cardLayout = new CardLayout();
         mainPanel = new JPanel(cardLayout);
-        mainPanel.setBackground(new Color(245, 245, 250));
+        mainPanel.setBackground(new Color(248, 249, 252));
 
         // 创建各个面板
         loginPanel = new LoginPanel(this, userService, adminService);
@@ -136,6 +150,17 @@ public class MainFrame extends JFrame {
         SwingUtilities.invokeLater(() -> {
             try {
                 UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+                // 设置 JTabbedPane 内容区域背景
+                UIManager.put("TabbedPane.contentAreaColor", new Color(255, 255, 255));
+                UIManager.put("TabbedPane.selected", new Color(255, 255, 255));
+                UIManager.put("TabbedPane.background", new Color(248, 249, 252));
+                UIManager.put("TabbedPane.contentBorderInsets", new Insets(0, 0, 0, 0));
+                
+                // 设置按钮的默认样式
+                UIManager.put("Button.contentAreaFilled", true);
+                UIManager.put("Button.borderPainted", false);
+                UIManager.put("Button.focusPainted", false);
+                UIManager.put("Button.rolloverEnabled", false);
             } catch (Exception e) {
                 e.printStackTrace();
             }

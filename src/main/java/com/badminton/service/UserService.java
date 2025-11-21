@@ -1,7 +1,7 @@
 package com.badminton.service;
 
 import com.badminton.model.Student;
-import com.badminton.persistence.InMemoryDB;
+import com.badminton.persistence.JsonDB;
 import com.badminton.util.BusinessException;
 
 import java.util.regex.Pattern;
@@ -10,10 +10,10 @@ import java.util.regex.Pattern;
  * 用户服务类（学生注册/登录）
  */
 public class UserService {
-    private InMemoryDB db;
+    private JsonDB db;
     private static final Pattern PHONE_PATTERN = Pattern.compile("^1[3-9]\\d{9}$");
 
-    public UserService(InMemoryDB db) {
+    public UserService(JsonDB db) {
         this.db = db;
     }
 

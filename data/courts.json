@@ -1,0 +1,50 @@
+[
+  {
+    "courtId": "C001",
+    "type": "DOUBLES",
+    "status": "AVAILABLE",
+    "baseScore": 0.00
+  },
+  {
+    "courtId": "C002",
+    "type": "DOUBLES",
+    "status": "AVAILABLE",
+    "baseScore": 0.00
+  },
+  {
+    "courtId": "C003",
+    "type": "DOUBLES",
+    "status": "AVAILABLE",
+    "baseScore": 0.00
+  },
+  {
+    "courtId": "C004",
+    "type": "DOUBLES",
+    "status": "AVAILABLE",
+    "baseScore": 0.00
+  },
+  {
+    "courtId": "C005",
+    "type": "SINGLES",
+    "status": "AVAILABLE",
+    "baseScore": 0.00
+  },
+  {
+    "courtId": "C006",
+    "type": "SINGLES",
+    "status": "AVAILABLE",
+    "baseScore": 0.00
+  },
+  {
+    "courtId": "C007",
+    "type": "SINGLES",
+    "status": "AVAILABLE",
+    "baseScore": 0.00
+  },
+  {
+    "courtId": "C008",
+    "type": "SINGLES",
+    "status": "AVAILABLE",
+    "baseScore": 0.00
+  }
+]

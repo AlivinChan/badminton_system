@@ -101,9 +101,128 @@ public class SwingUI extends JFrame {
         gbc.gridx = 1;
         centerPanel.add(idField, gbc);
 
-        JButton studentLoginBtn = new JButton("学生登录");
-        JButton adminLoginBtn = new JButton("管理员登录");
-        JButton registerBtn = new JButton("学生注册");
+        JButton studentLoginBtn = new JButton("学生登录") {
+            @Override
+            protected void paintComponent(Graphics g) {
+                if (getWidth() <= 0 || getHeight() <= 0) return;
+                
+                Graphics2D g2 = (Graphics2D) g.create();
+                try {
+                    g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                    
+                    // 绘制白色背景
+                    g2.setColor(Color.WHITE);
+                    g2.fillRect(0, 0, getWidth(), getHeight());
+                    
+                    // 绘制黑色边框
+                    g2.setColor(Color.BLACK);
+                    g2.setStroke(new BasicStroke(1.0f));
+                    g2.drawRect(0, 0, getWidth() - 1, getHeight() - 1);
+                    
+                    // 绘制黑色文字
+                    if (getText() != null && !getText().isEmpty()) {
+                        g2.setColor(Color.BLACK);
+                        g2.setFont(getFont());
+                        FontMetrics fm = g2.getFontMetrics();
+                        int x = (getWidth() - fm.stringWidth(getText())) / 2;
+                        int y = (getHeight() + fm.getAscent() - fm.getDescent()) / 2;
+                        g2.drawString(getText(), x, y);
+                    }
+                } finally {
+                    g2.dispose();
+                }
+            }
+        };
+        studentLoginBtn.setFont(new Font("微软雅黑", Font.BOLD, 14));
+        studentLoginBtn.setPreferredSize(new Dimension(120, 35));
+        studentLoginBtn.setBackground(Color.WHITE);
+        studentLoginBtn.setForeground(Color.BLACK);
+        studentLoginBtn.setFocusPainted(false);
+        studentLoginBtn.setBorderPainted(false);
+        studentLoginBtn.setContentAreaFilled(false);
+        studentLoginBtn.setOpaque(true);
+        
+        JButton adminLoginBtn = new JButton("管理员登录") {
+            @Override
+            protected void paintComponent(Graphics g) {
+                if (getWidth() <= 0 || getHeight() <= 0) return;
+                
+                Graphics2D g2 = (Graphics2D) g.create();
+                try {
+                    g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                    
+                    // 绘制白色背景
+                    g2.setColor(Color.WHITE);
+                    g2.fillRect(0, 0, getWidth(), getHeight());
+                    
+                    // 绘制黑色边框
+                    g2.setColor(Color.BLACK);
+                    g2.setStroke(new BasicStroke(1.0f));
+                    g2.drawRect(0, 0, getWidth() - 1, getHeight() - 1);
+                    
+                    // 绘制黑色文字
+                    if (getText() != null && !getText().isEmpty()) {
+                        g2.setColor(Color.BLACK);
+                        g2.setFont(getFont());
+                        FontMetrics fm = g2.getFontMetrics();
+                        int x = (getWidth() - fm.stringWidth(getText())) / 2;
+                        int y = (getHeight() + fm.getAscent() - fm.getDescent()) / 2;
+                        g2.drawString(getText(), x, y);
+                    }
+                } finally {
+                    g2.dispose();
+                }
+            }
+        };
+        adminLoginBtn.setFont(new Font("微软雅黑", Font.BOLD, 14));
+        adminLoginBtn.setPreferredSize(new Dimension(120, 35));
+        adminLoginBtn.setBackground(Color.WHITE);
+        adminLoginBtn.setForeground(Color.BLACK);
+        adminLoginBtn.setFocusPainted(false);
+        adminLoginBtn.setBorderPainted(false);
+        adminLoginBtn.setContentAreaFilled(false);
+        adminLoginBtn.setOpaque(true);
+        
+        JButton registerBtn = new JButton("学生注册") {
+            @Override
+            protected void paintComponent(Graphics g) {
+                if (getWidth() <= 0 || getHeight() <= 0) return;
+                
+                Graphics2D g2 = (Graphics2D) g.create();
+                try {
+                    g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                    
+                    // 绘制白色背景
+                    g2.setColor(Color.WHITE);
+                    g2.fillRect(0, 0, getWidth(), getHeight());
+                    
+                    // 绘制黑色边框
+                    g2.setColor(Color.BLACK);
+                    g2.setStroke(new BasicStroke(1.0f));
+                    g2.drawRect(0, 0, getWidth() - 1, getHeight() - 1);
+                    
+                    // 绘制黑色文字
+                    if (getText() != null && !getText().isEmpty()) {
+                        g2.setColor(Color.BLACK);
+                        g2.setFont(getFont());
+                        FontMetrics fm = g2.getFontMetrics();
+                        int x = (getWidth() - fm.stringWidth(getText())) / 2;
+                        int y = (getHeight() + fm.getAscent() - fm.getDescent()) / 2;
+                        g2.drawString(getText(), x, y);
+                    }
+                } finally {
+                    g2.dispose();
+                }
+            }
+        };
+        registerBtn.setFont(new Font("微软雅黑", Font.BOLD, 14));
+        registerBtn.setPreferredSize(new Dimension(120, 35));
+        registerBtn.setBackground(Color.WHITE);
+        registerBtn.setForeground(Color.BLACK);
+        registerBtn.setFocusPainted(false);
+        registerBtn.setBorderPainted(false);
+        registerBtn.setContentAreaFilled(false);
+        registerBtn.setOpaque(true);
 
         gbc.gridx = 0;
         gbc.gridy = 2;
@@ -190,6 +309,11 @@ public class SwingUI extends JFrame {
         panel.add(phoneField, gbc);
 
         JButton registerBtn = new JButton("注册");
+        registerBtn.setFont(new Font("微软雅黑", Font.BOLD, 14));
+        registerBtn.setPreferredSize(new Dimension(120, 35));
+        registerBtn.setBackground(new Color(100, 150, 100));
+        registerBtn.setForeground(Color.WHITE);
+        registerBtn.setFocusPainted(false);
         gbc.gridx = 0;
         gbc.gridy = 3;
         gbc.gridwidth = 2;
@@ -223,6 +347,11 @@ public class SwingUI extends JFrame {
         welcomeLabel.setFont(new Font("微软雅黑", Font.BOLD, 16));
         topPanel.add(welcomeLabel);
         JButton logoutBtn = new JButton("退出登录");
+        logoutBtn.setFont(new Font("微软雅黑", Font.PLAIN, 12));
+        logoutBtn.setPreferredSize(new Dimension(100, 30));
+        logoutBtn.setBackground(new Color(200, 80, 80));
+        logoutBtn.setForeground(Color.WHITE);
+        logoutBtn.setFocusPainted(false);
         logoutBtn.addActionListener(e -> {
             currentStudent = null;
             cardLayout.show(mainPanel, "LOGIN");
@@ -285,12 +414,22 @@ public class SwingUI extends JFrame {
         reservePanel.add(endTimeField, gbc);
 
         JButton reserveBtn = new JButton("预约");
+        reserveBtn.setFont(new Font("微软雅黑", Font.BOLD, 14));
+        reserveBtn.setPreferredSize(new Dimension(120, 35));
+        reserveBtn.setBackground(new Color(70, 130, 180));
+        reserveBtn.setForeground(Color.WHITE);
+        reserveBtn.setFocusPainted(false);
         gbc.gridx = 0;
         gbc.gridy = 3;
         gbc.gridwidth = 2;
         reservePanel.add(reserveBtn, gbc);
 
         JButton cancelReserveBtn = new JButton("取消预约");
+        cancelReserveBtn.setFont(new Font("微软雅黑", Font.BOLD, 14));
+        cancelReserveBtn.setPreferredSize(new Dimension(120, 35));
+        cancelReserveBtn.setBackground(new Color(200, 80, 80));
+        cancelReserveBtn.setForeground(Color.WHITE);
+        cancelReserveBtn.setFocusPainted(false);
         gbc.gridy = 4;
         reservePanel.add(cancelReserveBtn, gbc);
 
@@ -388,6 +527,11 @@ public class SwingUI extends JFrame {
         welcomeLabel.setFont(new Font("微软雅黑", Font.BOLD, 16));
         topPanel.add(welcomeLabel);
         JButton logoutBtn = new JButton("退出登录");
+        logoutBtn.setFont(new Font("微软雅黑", Font.PLAIN, 12));
+        logoutBtn.setPreferredSize(new Dimension(100, 30));
+        logoutBtn.setBackground(new Color(200, 80, 80));
+        logoutBtn.setForeground(Color.WHITE);
+        logoutBtn.setFocusPainted(false);
         logoutBtn.addActionListener(e -> {
             currentAdmin = null;
             cardLayout.show(mainPanel, "LOGIN");
@@ -406,7 +550,19 @@ public class SwingUI extends JFrame {
 
         JPanel courtButtonPanel = new JPanel(new FlowLayout());
         JButton addCourtBtn = new JButton("添加场地");
+        addCourtBtn.setFont(new Font("微软雅黑", Font.BOLD, 14));
+        addCourtBtn.setPreferredSize(new Dimension(120, 35));
+        addCourtBtn.setBackground(new Color(70, 130, 180));
+        addCourtBtn.setForeground(Color.WHITE);
+        addCourtBtn.setFocusPainted(false);
+        
         JButton updateCourtStatusBtn = new JButton("修改场地状态");
+        updateCourtStatusBtn.setFont(new Font("微软雅黑", Font.BOLD, 14));
+        updateCourtStatusBtn.setPreferredSize(new Dimension(140, 35));
+        updateCourtStatusBtn.setBackground(new Color(100, 150, 100));
+        updateCourtStatusBtn.setForeground(Color.WHITE);
+        updateCourtStatusBtn.setFocusPainted(false);
+        
         courtButtonPanel.add(addCourtBtn);
         courtButtonPanel.add(updateCourtStatusBtn);
         courtPanel.add(courtButtonPanel, BorderLayout.SOUTH);
@@ -434,6 +590,11 @@ public class SwingUI extends JFrame {
 
         JPanel reservationButtonPanel = new JPanel(new FlowLayout());
         JButton confirmBtn = new JButton("确认完成");
+        confirmBtn.setFont(new Font("微软雅黑", Font.BOLD, 14));
+        confirmBtn.setPreferredSize(new Dimension(120, 35));
+        confirmBtn.setBackground(new Color(70, 130, 180));
+        confirmBtn.setForeground(Color.WHITE);
+        confirmBtn.setFocusPainted(false);
         reservationButtonPanel.add(confirmBtn);
         reservationPanel.add(reservationButtonPanel, BorderLayout.SOUTH);
 
@@ -539,6 +700,11 @@ public class SwingUI extends JFrame {
         panel.add(statusCombo, gbc);
 
         JButton addBtn = new JButton("添加");
+        addBtn.setFont(new Font("微软雅黑", Font.BOLD, 14));
+        addBtn.setPreferredSize(new Dimension(120, 35));
+        addBtn.setBackground(new Color(70, 130, 180));
+        addBtn.setForeground(Color.WHITE);
+        addBtn.setFocusPainted(false);
         gbc.gridx = 0;
         gbc.gridy = 3;
         gbc.gridwidth = 2;
@@ -586,6 +752,11 @@ public class SwingUI extends JFrame {
         panel.add(statusCombo, gbc);
 
         JButton updateBtn = new JButton("修改");
+        updateBtn.setFont(new Font("微软雅黑", Font.BOLD, 14));
+        updateBtn.setPreferredSize(new Dimension(120, 35));
+        updateBtn.setBackground(new Color(70, 130, 180));
+        updateBtn.setForeground(Color.WHITE);
+        updateBtn.setFocusPainted(false);
         gbc.gridx = 0;
         gbc.gridy = 2;
         gbc.gridwidth = 2;

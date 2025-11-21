@@ -3,7 +3,7 @@ package com.badminton.service;
 import com.badminton.model.Booking;
 import com.badminton.model.BookingState;
 import com.badminton.model.Court;
-import com.badminton.persistence.InMemoryDB;
+import com.badminton.persistence.JsonDB;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -14,9 +14,9 @@ import java.util.Map;
  * 统计服务类
  */
 public class StatisticsService {
-    private InMemoryDB db;
+    private JsonDB db;
 
-    public StatisticsService(InMemoryDB db) {
+    public StatisticsService(JsonDB db) {
         this.db = db;
     }
 

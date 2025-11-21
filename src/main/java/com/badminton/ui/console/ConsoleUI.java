@@ -1,7 +1,7 @@
 package com.badminton.ui.console;
 
 import com.badminton.model.*;
-import com.badminton.persistence.InMemoryDB;
+import com.badminton.persistence.JsonDB;
 import com.badminton.service.*;
 import com.badminton.util.BusinessException;
 import com.badminton.util.FeePolicy;
@@ -12,6 +12,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 /**
@@ -19,7 +20,7 @@ import java.util.Scanner;
  */
 public class ConsoleUI {
     private Scanner scanner;
-    private InMemoryDB db;
+    private JsonDB db;
     private UserService userService;
     private AdminService adminService;
     private BookingService bookingService;
@@ -32,7 +33,7 @@ public class ConsoleUI {
 
     public ConsoleUI() {
         scanner = new Scanner(System.in);
-        db = InMemoryDB.loadFromFile();
+        db = JsonDB.loadFromFile();
         FeePolicy feePolicy = new DefaultFeePolicy();
         userService = new UserService(db);
         bookingService = new BookingService(db, feePolicy);
@@ -49,11 +50,16 @@ public class ConsoleUI {
      */
     private void initializeDefaultData() {
         if (db.getCourtCount() == 0) {
-            // 创建默认场地
+            // 单打场地
             db.addCourt(new Court("C001", CourtType.SINGLES, CourtStatus.AVAILABLE, 0));
             db.addCourt(new Court("C002", CourtType.SINGLES, CourtStatus.AVAILABLE, 0));
-            db.addCourt(new Court("C003", CourtType.DOUBLES, CourtStatus.AVAILABLE, 0));
-            db.addCourt(new Court("C004", CourtType.DOUBLES, CourtStatus.AVAILABLE, 0));
+            db.addCourt(new Court("C003", CourtType.SINGLES, CourtStatus.AVAILABLE, 0));
+            db.addCourt(new Court("C004", CourtType.SINGLES, CourtStatus.AVAILABLE, 0));
+            // 双打场地
+            db.addCourt(new Court("C005", CourtType.DOUBLES, CourtStatus.AVAILABLE, 0));
+            db.addCourt(new Court("C006", CourtType.DOUBLES, CourtStatus.AVAILABLE, 0));
+            db.addCourt(new Court("C007", CourtType.DOUBLES, CourtStatus.AVAILABLE, 0));
+            db.addCourt(new Court("C008", CourtType.DOUBLES, CourtStatus.AVAILABLE, 0));
             db.saveToFile();
         }
 
@@ -424,13 +430,13 @@ public class ConsoleUI {
 
     private void showCourtRatings() {
         System.out.println("\n--- 场地评分统计 ---");
-        var stats = statisticsService.getCourtRatingStatistics();
+        Map<String, Map<String, Object>> stats = statisticsService.getCourtRatingStatistics();
         if (stats.isEmpty()) {
             System.out.println("暂无评分数据");
         } else {
             System.out.printf("%-8s %-10s %-12s %-10s%n", "场地", "类型", "平均评分", "评分次数");
-            for (var entry : stats.entrySet()) {
-                var stat = entry.getValue();
+            for (Map.Entry<String, Map<String, Object>> entry : stats.entrySet()) {
+                Map<String, Object> stat = entry.getValue();
                 System.out.printf("%-8s %-10s %-12.2f %-10d%n",
                         stat.get("courtId"),
                         stat.get("type"),

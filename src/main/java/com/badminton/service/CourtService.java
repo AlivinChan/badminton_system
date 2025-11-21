@@ -4,7 +4,7 @@ import com.badminton.model.Court;
 import com.badminton.model.CourtStatus;
 import com.badminton.model.CourtType;
 import com.badminton.model.TimeSlot;
-import com.badminton.persistence.InMemoryDB;
+import com.badminton.persistence.JsonDB;
 import com.badminton.util.BusinessException;
 
 import java.util.ArrayList;
@@ -14,10 +14,10 @@ import java.util.List;
  * 场地服务类
  */
 public class CourtService {
-    private InMemoryDB db;
+    private JsonDB db;
     private BookingService bookingService;
 
-    public CourtService(InMemoryDB db, BookingService bookingService) {
+    public CourtService(JsonDB db, BookingService bookingService) {
         this.db = db;
         this.bookingService = bookingService;
     }

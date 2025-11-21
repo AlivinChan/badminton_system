@@ -1,7 +1,7 @@
 package com.badminton.service;
 
 import com.badminton.model.*;
-import com.badminton.persistence.InMemoryDB;
+import com.badminton.persistence.JsonDB;
 import com.badminton.util.BusinessException;
 import com.badminton.util.FeePolicy;
 
@@ -11,10 +11,10 @@ import java.time.LocalDateTime;
  * 预约服务类
  */
 public class BookingService {
-    private InMemoryDB db;
+    private JsonDB db;
     private FeePolicy feePolicy;
 
-    public BookingService(InMemoryDB db, FeePolicy feePolicy) {
+    public BookingService(JsonDB db, FeePolicy feePolicy) {
         this.db = db;
         this.feePolicy = feePolicy;
     }

@@ -3,16 +3,16 @@ package com.badminton.service;
 import com.badminton.model.Admin;
 import com.badminton.model.Booking;
 import com.badminton.model.BookingState;
-import com.badminton.persistence.InMemoryDB;
+import com.badminton.persistence.JsonDB;
 import com.badminton.util.BusinessException;
 
 /**
  * 管理员服务类
  */
 public class AdminService {
-    private InMemoryDB db;
+    private JsonDB db;
 
-    public AdminService(InMemoryDB db) {
+    public AdminService(JsonDB db) {
         this.db = db;
     }
 
