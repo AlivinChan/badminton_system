@@ -1,9 +1,12 @@
 package com.badminton.model;
 
+import java.io.Serializable;
+
 /**
  * 场地实体类
  */
-public class Court {
+public class Court implements Serializable {
+    private static final long serialVersionUID = 1L;
     private String courtId; // 场地编号
     private CourtType type;
     private CourtStatus status;

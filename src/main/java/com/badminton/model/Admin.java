@@ -1,9 +1,12 @@
 package com.badminton.model;
 
+import java.io.Serializable;
+
 /**
  * 管理员实体类
  */
-public class Admin {
+public class Admin implements Serializable {
+    private static final long serialVersionUID = 1L;
     private String adminId; // 工号
     private String name;
     private String phone;

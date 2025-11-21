@@ -1,11 +1,13 @@
 package com.badminton.model;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
  * 学生实体类
  */
-public class Student {
+public class Student implements Serializable {
+    private static final long serialVersionUID = 1L;
     private String studentId; // 学号
     private String name;
     private String phone;

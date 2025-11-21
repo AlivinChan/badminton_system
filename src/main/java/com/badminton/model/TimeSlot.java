@@ -1,12 +1,17 @@
 package com.badminton.model;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
 /**
  * 预约时段类
  */
-public class TimeSlot {
+public class TimeSlot implements Serializable {
+    private static final long serialVersionUID = 1L;
     private LocalDate date;
     private LocalTime start; // 包含分钟
     private LocalTime end;
@@ -67,6 +72,27 @@ public class TimeSlot {
     @Override
     public String toString() {
         return date + " " + start + "-" + end;
+    }
+
+    /**
+     * 自定义序列化方法，处理 LocalDate 和 LocalTime 的序列化
+     */
+    private void writeObject(ObjectOutputStream out) throws IOException {
+        out.writeObject(date != null ? date.toString() : null);
+        out.writeObject(start != null ? start.toString() : null);
+        out.writeObject(end != null ? end.toString() : null);
+    }
+
+    /**
+     * 自定义反序列化方法，处理 LocalDate 和 LocalTime 的反序列化
+     */
+    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+        String dateStr = (String) in.readObject();
+        String startStr = (String) in.readObject();
+        String endStr = (String) in.readObject();
+        this.date = dateStr != null ? LocalDate.parse(dateStr) : null;
+        this.start = startStr != null ? LocalTime.parse(startStr) : null;
+        this.end = endStr != null ? LocalTime.parse(endStr) : null;
     }
 }
 

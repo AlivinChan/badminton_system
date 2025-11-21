@@ -49,16 +49,25 @@ public class AdminDashboardPanel extends JPanel {
 
     private void initializeUI() {
         setLayout(new BorderLayout());
+        setBackground(new Color(245, 245, 250));
 
         // 顶部：返回按钮
         JPanel topPanel = new JPanel(new BorderLayout());
+        topPanel.setBackground(new Color(70, 130, 180));
+        topPanel.setBorder(BorderFactory.createEmptyBorder(10, 15, 10, 15));
         JButton backButton = new JButton("注销");
+        backButton.setFont(new Font("微软雅黑", Font.PLAIN, 12));
+        backButton.setPreferredSize(new Dimension(80, 30));
+        backButton.setBackground(new Color(220, 220, 220));
+        backButton.setFocusPainted(false);
         backButton.addActionListener(e -> mainFrame.showLoginPanel());
         topPanel.add(backButton, BorderLayout.WEST);
         add(topPanel, BorderLayout.NORTH);
 
         // 使用选项卡
-        JTabbedPane tabbedPane = new JTabbedPane();
+        JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+        tabbedPane.setFont(new Font("微软雅黑", Font.PLAIN, 14));
+        tabbedPane.setBackground(new Color(245, 245, 250));
 
         // 预约管理面板
         JPanel bookingsPanel = createBookingsPanel();
@@ -86,16 +95,32 @@ public class AdminDashboardPanel extends JPanel {
             }
         };
         bookingsTable = new JTable(bookingsModel);
+        bookingsTable.setFont(new Font("微软雅黑", Font.PLAIN, 13));
+        bookingsTable.setRowHeight(25);
+        bookingsTable.getTableHeader().setFont(new Font("微软雅黑", Font.BOLD, 13));
+        bookingsTable.setSelectionBackground(new Color(230, 240, 255));
         JScrollPane scrollPane = new JScrollPane(bookingsTable);
+        scrollPane.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         panel.add(scrollPane, BorderLayout.CENTER);
 
         // 操作按钮
-        JPanel buttonPanel = new JPanel(new FlowLayout());
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 15));
+        buttonPanel.setBackground(new Color(245, 245, 250));
         JButton confirmButton = new JButton("确认完成");
+        confirmButton.setFont(new Font("微软雅黑", Font.PLAIN, 13));
+        confirmButton.setPreferredSize(new Dimension(120, 32));
+        confirmButton.setBackground(new Color(70, 130, 180));
+        confirmButton.setForeground(Color.WHITE);
+        confirmButton.setFocusPainted(false);
         confirmButton.addActionListener(e -> confirmBooking());
         buttonPanel.add(confirmButton);
 
         JButton refreshButton = new JButton("刷新");
+        refreshButton.setFont(new Font("微软雅黑", Font.PLAIN, 13));
+        refreshButton.setPreferredSize(new Dimension(100, 32));
+        refreshButton.setBackground(new Color(100, 150, 100));
+        refreshButton.setForeground(Color.WHITE);
+        refreshButton.setFocusPainted(false);
         refreshButton.addActionListener(e -> refreshBookings());
         buttonPanel.add(refreshButton);
 
@@ -115,16 +140,32 @@ public class AdminDashboardPanel extends JPanel {
             }
         };
         courtsTable = new JTable(courtsModel);
+        courtsTable.setFont(new Font("微软雅黑", Font.PLAIN, 13));
+        courtsTable.setRowHeight(25);
+        courtsTable.getTableHeader().setFont(new Font("微软雅黑", Font.BOLD, 13));
+        courtsTable.setSelectionBackground(new Color(230, 240, 255));
         JScrollPane scrollPane = new JScrollPane(courtsTable);
+        scrollPane.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         panel.add(scrollPane, BorderLayout.CENTER);
 
         // 操作按钮
-        JPanel buttonPanel = new JPanel(new FlowLayout());
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 15));
+        buttonPanel.setBackground(new Color(245, 245, 250));
         JButton changeStatusButton = new JButton("更改状态");
+        changeStatusButton.setFont(new Font("微软雅黑", Font.PLAIN, 13));
+        changeStatusButton.setPreferredSize(new Dimension(120, 32));
+        changeStatusButton.setBackground(new Color(70, 130, 180));
+        changeStatusButton.setForeground(Color.WHITE);
+        changeStatusButton.setFocusPainted(false);
         changeStatusButton.addActionListener(e -> changeCourtStatus());
         buttonPanel.add(changeStatusButton);
 
         JButton refreshButton = new JButton("刷新");
+        refreshButton.setFont(new Font("微软雅黑", Font.PLAIN, 13));
+        refreshButton.setPreferredSize(new Dimension(100, 32));
+        refreshButton.setBackground(new Color(100, 150, 100));
+        refreshButton.setForeground(Color.WHITE);
+        refreshButton.setFocusPainted(false);
         refreshButton.addActionListener(e -> refreshCourts());
         buttonPanel.add(refreshButton);
 
@@ -145,16 +186,32 @@ public class AdminDashboardPanel extends JPanel {
             }
         };
         ratingsTable = new JTable(ratingsModel);
+        ratingsTable.setFont(new Font("微软雅黑", Font.PLAIN, 13));
+        ratingsTable.setRowHeight(25);
+        ratingsTable.getTableHeader().setFont(new Font("微软雅黑", Font.BOLD, 13));
+        ratingsTable.setSelectionBackground(new Color(230, 240, 255));
         JScrollPane scrollPane = new JScrollPane(ratingsTable);
+        scrollPane.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         panel.add(scrollPane, BorderLayout.CENTER);
 
         // 操作按钮
-        JPanel buttonPanel = new JPanel(new FlowLayout());
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 15));
+        buttonPanel.setBackground(new Color(245, 245, 250));
         JButton refreshRatingsButton = new JButton("刷新评分统计");
+        refreshRatingsButton.setFont(new Font("微软雅黑", Font.PLAIN, 13));
+        refreshRatingsButton.setPreferredSize(new Dimension(140, 32));
+        refreshRatingsButton.setBackground(new Color(100, 150, 100));
+        refreshRatingsButton.setForeground(Color.WHITE);
+        refreshRatingsButton.setFocusPainted(false);
         refreshRatingsButton.addActionListener(e -> refreshRatings());
         buttonPanel.add(refreshRatingsButton);
 
         JButton earningsButton = new JButton("收入统计");
+        earningsButton.setFont(new Font("微软雅黑", Font.PLAIN, 13));
+        earningsButton.setPreferredSize(new Dimension(120, 32));
+        earningsButton.setBackground(new Color(70, 130, 180));
+        earningsButton.setForeground(Color.WHITE);
+        earningsButton.setFocusPainted(false);
         earningsButton.addActionListener(e -> showEarningsReport());
         buttonPanel.add(earningsButton);
 

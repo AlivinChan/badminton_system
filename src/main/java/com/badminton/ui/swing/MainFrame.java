@@ -71,8 +71,9 @@ public class MainFrame extends JFrame {
     private void initializeUI() {
         setTitle("校园羽毛球馆场地预约管理系统");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(1000, 700);
+        setSize(1200, 800);
         setLocationRelativeTo(null);
+        setMinimumSize(new Dimension(1000, 600));
 
         // 创建菜单栏
         createMenuBar();
@@ -80,6 +81,7 @@ public class MainFrame extends JFrame {
         // 主面板使用CardLayout
         cardLayout = new CardLayout();
         mainPanel = new JPanel(cardLayout);
+        mainPanel.setBackground(new Color(245, 245, 250));
 
         // 创建各个面板
         loginPanel = new LoginPanel(this, userService, adminService);

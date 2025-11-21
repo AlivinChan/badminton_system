@@ -58,20 +58,31 @@ public class StudentDashboardPanel extends JPanel {
 
     private void initializeUI() {
         setLayout(new BorderLayout());
+        setBackground(new Color(245, 245, 250));
 
         // 顶部：返回按钮和用户信息
         JPanel topPanel = new JPanel(new BorderLayout());
+        topPanel.setBackground(new Color(70, 130, 180));
+        topPanel.setBorder(BorderFactory.createEmptyBorder(10, 15, 10, 15));
+        
         JButton backButton = new JButton("注销");
+        backButton.setFont(new Font("微软雅黑", Font.PLAIN, 12));
+        backButton.setPreferredSize(new Dimension(80, 30));
+        backButton.setBackground(new Color(220, 220, 220));
+        backButton.setFocusPainted(false);
         backButton.addActionListener(e -> mainFrame.showLoginPanel());
         topPanel.add(backButton, BorderLayout.WEST);
         
         userLabel = new JLabel("", JLabel.CENTER);
-        userLabel.setFont(new Font("微软雅黑", Font.PLAIN, 14));
+        userLabel.setFont(new Font("微软雅黑", Font.BOLD, 16));
+        userLabel.setForeground(Color.WHITE);
         topPanel.add(userLabel, BorderLayout.CENTER);
         add(topPanel, BorderLayout.NORTH);
 
         // 使用选项卡
-        JTabbedPane tabbedPane = new JTabbedPane();
+        JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+        tabbedPane.setFont(new Font("微软雅黑", Font.PLAIN, 14));
+        tabbedPane.setBackground(new Color(245, 245, 250));
 
         // 查询和预约面板
         JPanel queryPanel = createQueryPanel();
@@ -89,38 +100,89 @@ public class StudentDashboardPanel extends JPanel {
 
         // 顶部提示和刷新按钮
         JPanel topPanel = new JPanel(new BorderLayout());
-        topPanel.add(new JLabel("所有场地信息："), BorderLayout.WEST);
+        topPanel.setBackground(new Color(255, 255, 255));
+        topPanel.setBorder(BorderFactory.createEmptyBorder(10, 15, 10, 15));
+        JLabel infoLabel = new JLabel("所有场地信息：");
+        infoLabel.setFont(new Font("微软雅黑", Font.BOLD, 14));
+        topPanel.add(infoLabel, BorderLayout.WEST);
         JButton refreshButton = new JButton("刷新");
+        refreshButton.setFont(new Font("微软雅黑", Font.PLAIN, 12));
+        refreshButton.setPreferredSize(new Dimension(80, 28));
+        refreshButton.setBackground(new Color(100, 150, 100));
+        refreshButton.setForeground(Color.WHITE);
+        refreshButton.setFocusPainted(false);
         refreshButton.addActionListener(e -> showAllCourts());
         topPanel.add(refreshButton, BorderLayout.EAST);
         panel.add(topPanel, BorderLayout.NORTH);
 
         // 可用场地表格
         String[] columns = {"场地编号", "类型", "状态"};
-        availableCourtsModel = new DefaultTableModel(columns, 0);
+        availableCourtsModel = new DefaultTableModel(columns, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
         availableCourtsTable = new JTable(availableCourtsModel);
+        availableCourtsTable.setFont(new Font("微软雅黑", Font.PLAIN, 13));
+        availableCourtsTable.setRowHeight(25);
+        availableCourtsTable.getTableHeader().setFont(new Font("微软雅黑", Font.BOLD, 13));
+        availableCourtsTable.setSelectionBackground(new Color(230, 240, 255));
         JScrollPane scrollPane = new JScrollPane(availableCourtsTable);
+        scrollPane.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         panel.add(scrollPane, BorderLayout.CENTER);
 
         // 预约面板
         JPanel bookingPanel = new JPanel(new BorderLayout());
-        JPanel bookingInputPanel = new JPanel(new FlowLayout());
-        bookingInputPanel.add(new JLabel("预约场地："));
-        bookingInputPanel.add(new JLabel("场地编号："));
+        bookingPanel.setBorder(BorderFactory.createTitledBorder(
+            BorderFactory.createLineBorder(new Color(200, 200, 200), 1),
+            "预约场地", 0, 0, new Font("微软雅黑", Font.BOLD, 13)));
+        bookingPanel.setBackground(new Color(255, 255, 255));
+        
+        JPanel bookingInputPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 15));
+        bookingInputPanel.setBackground(new Color(255, 255, 255));
+        
+        JLabel courtLabel = new JLabel("场地编号：");
+        courtLabel.setFont(new Font("微软雅黑", Font.PLAIN, 13));
+        bookingInputPanel.add(courtLabel);
         courtIdField = new JTextField(10);
+        courtIdField.setFont(new Font("微软雅黑", Font.PLAIN, 13));
+        courtIdField.setPreferredSize(new Dimension(100, 28));
         bookingInputPanel.add(courtIdField);
-        bookingInputPanel.add(new JLabel("日期（yyyy-MM-dd）："));
+        
+        JLabel dateLabel = new JLabel("日期（yyyy-MM-dd）：");
+        dateLabel.setFont(new Font("微软雅黑", Font.PLAIN, 13));
+        bookingInputPanel.add(dateLabel);
         dateField = new JTextField(12);
+        dateField.setFont(new Font("微软雅黑", Font.PLAIN, 13));
+        dateField.setPreferredSize(new Dimension(120, 28));
         bookingInputPanel.add(dateField);
-        bookingInputPanel.add(new JLabel("开始时间（HH:mm）："));
+        
+        JLabel startLabel = new JLabel("开始时间（HH:mm）：");
+        startLabel.setFont(new Font("微软雅黑", Font.PLAIN, 13));
+        bookingInputPanel.add(startLabel);
         startTimeField = new JTextField(8);
+        startTimeField.setFont(new Font("微软雅黑", Font.PLAIN, 13));
+        startTimeField.setPreferredSize(new Dimension(80, 28));
         bookingInputPanel.add(startTimeField);
-        bookingInputPanel.add(new JLabel("结束时间（HH:mm）："));
+        
+        JLabel endLabel = new JLabel("结束时间（HH:mm）：");
+        endLabel.setFont(new Font("微软雅黑", Font.PLAIN, 13));
+        bookingInputPanel.add(endLabel);
         endTimeField = new JTextField(8);
+        endTimeField.setFont(new Font("微软雅黑", Font.PLAIN, 13));
+        endTimeField.setPreferredSize(new Dimension(80, 28));
         bookingInputPanel.add(endTimeField);
+        
         JButton bookButton = new JButton("预约");
+        bookButton.setFont(new Font("微软雅黑", Font.BOLD, 13));
+        bookButton.setPreferredSize(new Dimension(100, 32));
+        bookButton.setBackground(new Color(70, 130, 180));
+        bookButton.setForeground(Color.WHITE);
+        bookButton.setFocusPainted(false);
         bookButton.addActionListener(e -> createBooking());
         bookingInputPanel.add(bookButton);
+        
         bookingPanel.add(bookingInputPanel, BorderLayout.CENTER);
         panel.add(bookingPanel, BorderLayout.SOUTH);
 
@@ -141,20 +203,42 @@ public class StudentDashboardPanel extends JPanel {
             }
         };
         myBookingsTable = new JTable(myBookingsModel);
+        myBookingsTable.setFont(new Font("微软雅黑", Font.PLAIN, 13));
+        myBookingsTable.setRowHeight(25);
+        myBookingsTable.getTableHeader().setFont(new Font("微软雅黑", Font.BOLD, 13));
+        myBookingsTable.setSelectionBackground(new Color(230, 240, 255));
         JScrollPane scrollPane = new JScrollPane(myBookingsTable);
+        scrollPane.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         panel.add(scrollPane, BorderLayout.CENTER);
 
         // 操作按钮
-        JPanel buttonPanel = new JPanel(new FlowLayout());
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 15));
+        buttonPanel.setBackground(new Color(245, 245, 250));
+        
         JButton cancelButton = new JButton("取消预约");
+        cancelButton.setFont(new Font("微软雅黑", Font.PLAIN, 13));
+        cancelButton.setPreferredSize(new Dimension(100, 32));
+        cancelButton.setBackground(new Color(220, 100, 100));
+        cancelButton.setForeground(Color.WHITE);
+        cancelButton.setFocusPainted(false);
         cancelButton.addActionListener(e -> cancelBooking());
         buttonPanel.add(cancelButton);
 
         JButton rateButton = new JButton("评分");
+        rateButton.setFont(new Font("微软雅黑", Font.PLAIN, 13));
+        rateButton.setPreferredSize(new Dimension(100, 32));
+        rateButton.setBackground(new Color(70, 130, 180));
+        rateButton.setForeground(Color.WHITE);
+        rateButton.setFocusPainted(false);
         rateButton.addActionListener(e -> rateBooking());
         buttonPanel.add(rateButton);
 
         JButton refreshButton = new JButton("刷新");
+        refreshButton.setFont(new Font("微软雅黑", Font.PLAIN, 13));
+        refreshButton.setPreferredSize(new Dimension(100, 32));
+        refreshButton.setBackground(new Color(100, 150, 100));
+        refreshButton.setForeground(Color.WHITE);
+        refreshButton.setFocusPainted(false);
         refreshButton.addActionListener(e -> refreshMyBookings());
         buttonPanel.add(refreshButton);
 

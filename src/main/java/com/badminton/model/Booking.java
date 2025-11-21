@@ -1,11 +1,16 @@
 package com.badminton.model;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
  * 预约实体类
  */
-public class Booking {
+public class Booking implements Serializable {
+    private static final long serialVersionUID = 1L;
     private String bookingId;
     private Student student;
     private String courtId;
@@ -13,7 +18,7 @@ public class Booking {
     private BookingState state;
     private double fee; // 预约费用（在创建或确认时计算）
     private int rating; // 学生对场地的评分（0-5），0表示未评分
-    private LocalDateTime createdAt;
+    private transient LocalDateTime createdAt; // 使用 transient 标记，手动序列化
 
     public Booking() {
     }
@@ -109,6 +114,25 @@ public class Booking {
                 ", rating=" + rating +
                 ", createdAt=" + createdAt +
                 '}';
+    }
+
+    /**
+     * 自定义序列化方法，处理 LocalDateTime 的序列化
+     */
+    private void writeObject(ObjectOutputStream out) throws IOException {
+        out.defaultWriteObject();
+        // 手动序列化 LocalDateTime
+        out.writeObject(createdAt != null ? createdAt.toString() : null);
+    }
+
+    /**
+     * 自定义反序列化方法，处理 LocalDateTime 的反序列化
+     */
+    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        // 手动反序列化 LocalDateTime
+        String createdAtStr = (String) in.readObject();
+        this.createdAt = createdAtStr != null ? LocalDateTime.parse(createdAtStr) : null;
     }
 }
 

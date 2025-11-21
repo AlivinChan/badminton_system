@@ -176,8 +176,12 @@ public class InMemoryDB implements Serializable {
         try (ObjectOutputStream oos = new ObjectOutputStream(
                 new FileOutputStream(DATA_FILE))) {
             oos.writeObject(this);
+        } catch (NotSerializableException e) {
+            System.err.println("保存数据失败: 对象不可序列化 - " + e.getMessage());
+            e.printStackTrace();
         } catch (IOException e) {
             System.err.println("保存数据失败: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
@@ -190,8 +194,34 @@ public class InMemoryDB implements Serializable {
         try (ObjectInputStream ois = new ObjectInputStream(
                 new FileInputStream(DATA_FILE))) {
             return (InMemoryDB) ois.readObject();
-        } catch (IOException | ClassNotFoundException e) {
+        } catch (NotSerializableException e) {
+            System.err.println("加载数据失败: 对象不可序列化 - " + e.getMessage());
+            System.err.println("提示: 可能是旧版本的数据文件，将创建新的数据库");
+            // 备份旧文件
+            File backupFile = new File(DATA_FILE + ".backup");
+            if (file.exists() && !backupFile.exists()) {
+                file.renameTo(backupFile);
+            }
+            return new InMemoryDB();
+        } catch (ClassNotFoundException e) {
+            System.err.println("加载数据失败: 类未找到 - " + e.getMessage());
+            System.err.println("提示: 可能是旧版本的数据文件，将创建新的数据库");
+            // 备份旧文件
+            File backupFile = new File(DATA_FILE + ".backup");
+            if (file.exists() && !backupFile.exists()) {
+                file.renameTo(backupFile);
+            }
+            return new InMemoryDB();
+        } catch (IOException e) {
             System.err.println("加载数据失败: " + e.getMessage());
+            // 如果是序列化相关的错误，备份旧文件
+            if (e.getMessage() != null && e.getMessage().contains("NotSerializableException")) {
+                System.err.println("提示: 可能是旧版本的数据文件，将创建新的数据库");
+                File backupFile = new File(DATA_FILE + ".backup");
+                if (file.exists() && !backupFile.exists()) {
+                    file.renameTo(backupFile);
+                }
+            }
             return new InMemoryDB();
         }
     }

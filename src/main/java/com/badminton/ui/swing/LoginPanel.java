@@ -33,15 +33,22 @@ public class LoginPanel extends JPanel {
 
     private void initializeUI() {
         setLayout(new BorderLayout());
+        setBackground(new Color(245, 245, 250));
         
-        // 标题
+        // 标题面板（带背景色）
+        JPanel titlePanel = new JPanel(new BorderLayout());
+        titlePanel.setBackground(new Color(70, 130, 180));
+        titlePanel.setBorder(BorderFactory.createEmptyBorder(30, 0, 30, 0));
         JLabel titleLabel = new JLabel("校园羽毛球馆场地预约管理系统", JLabel.CENTER);
-        titleLabel.setFont(new Font("微软雅黑", Font.BOLD, 24));
-        titleLabel.setBorder(BorderFactory.createEmptyBorder(20, 0, 20, 0));
-        add(titleLabel, BorderLayout.NORTH);
+        titleLabel.setFont(new Font("微软雅黑", Font.BOLD, 28));
+        titleLabel.setForeground(Color.WHITE);
+        titlePanel.add(titleLabel, BorderLayout.CENTER);
+        add(titlePanel, BorderLayout.NORTH);
 
         // 选项卡
-        tabbedPane = new JTabbedPane();
+        tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+        tabbedPane.setFont(new Font("微软雅黑", Font.PLAIN, 14));
+        tabbedPane.setBackground(new Color(245, 245, 250));
         
         // 学生登录面板
         studentLoginPanel = createStudentLoginPanel();
@@ -55,25 +62,41 @@ public class LoginPanel extends JPanel {
         adminLoginPanel = createAdminLoginPanel();
         tabbedPane.addTab("管理员登录", adminLoginPanel);
 
-        add(tabbedPane, BorderLayout.CENTER);
+        // 添加边距
+        JPanel centerPanel = new JPanel(new BorderLayout());
+        centerPanel.setBorder(BorderFactory.createEmptyBorder(20, 50, 20, 50));
+        centerPanel.setBackground(new Color(245, 245, 250));
+        centerPanel.add(tabbedPane, BorderLayout.CENTER);
+        add(centerPanel, BorderLayout.CENTER);
     }
 
     private JPanel createStudentLoginPanel() {
         JPanel panel = new JPanel(new GridBagLayout());
+        panel.setBackground(new Color(255, 255, 255));
+        panel.setBorder(BorderFactory.createEmptyBorder(40, 40, 40, 40));
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(10, 10, 10, 10);
+        gbc.insets = new Insets(15, 15, 15, 15);
         gbc.anchor = GridBagConstraints.WEST;
 
         JLabel studentIdLabel = new JLabel("学号：");
-        JTextField studentIdField = new JTextField(20);
+        studentIdLabel.setFont(new Font("微软雅黑", Font.PLAIN, 14));
+        JTextField studentIdField = new JTextField(25);
+        studentIdField.setFont(new Font("微软雅黑", Font.PLAIN, 14));
+        studentIdField.setPreferredSize(new Dimension(250, 30));
         JButton loginButton = new JButton("登录");
+        loginButton.setFont(new Font("微软雅黑", Font.BOLD, 14));
+        loginButton.setPreferredSize(new Dimension(120, 35));
+        loginButton.setBackground(new Color(70, 130, 180));
+        loginButton.setForeground(Color.WHITE);
+        loginButton.setFocusPainted(false);
 
         gbc.gridx = 0; gbc.gridy = 0;
         panel.add(studentIdLabel, gbc);
         gbc.gridx = 1;
         panel.add(studentIdField, gbc);
 
-        gbc.gridx = 1; gbc.gridy = 1;
+        gbc.gridx = 0; gbc.gridy = 1;
+        gbc.gridwidth = 2;
         gbc.anchor = GridBagConstraints.CENTER;
         loginButton.addActionListener(e -> {
             String studentId = studentIdField.getText().trim();
@@ -98,17 +121,36 @@ public class LoginPanel extends JPanel {
 
     private JPanel createStudentRegisterPanel() {
         JPanel panel = new JPanel(new GridBagLayout());
+        panel.setBackground(new Color(255, 255, 255));
+        panel.setBorder(BorderFactory.createEmptyBorder(40, 40, 40, 40));
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(10, 10, 10, 10);
+        gbc.insets = new Insets(15, 15, 15, 15);
         gbc.anchor = GridBagConstraints.WEST;
 
         JLabel studentIdLabel = new JLabel("学号：");
-        JTextField studentIdField = new JTextField(20);
+        studentIdLabel.setFont(new Font("微软雅黑", Font.PLAIN, 14));
+        JTextField studentIdField = new JTextField(25);
+        studentIdField.setFont(new Font("微软雅黑", Font.PLAIN, 14));
+        studentIdField.setPreferredSize(new Dimension(250, 30));
+        
         JLabel nameLabel = new JLabel("姓名：");
-        JTextField nameField = new JTextField(20);
+        nameLabel.setFont(new Font("微软雅黑", Font.PLAIN, 14));
+        JTextField nameField = new JTextField(25);
+        nameField.setFont(new Font("微软雅黑", Font.PLAIN, 14));
+        nameField.setPreferredSize(new Dimension(250, 30));
+        
         JLabel phoneLabel = new JLabel("手机号：");
-        JTextField phoneField = new JTextField(20);
+        phoneLabel.setFont(new Font("微软雅黑", Font.PLAIN, 14));
+        JTextField phoneField = new JTextField(25);
+        phoneField.setFont(new Font("微软雅黑", Font.PLAIN, 14));
+        phoneField.setPreferredSize(new Dimension(250, 30));
+        
         JButton registerButton = new JButton("注册");
+        registerButton.setFont(new Font("微软雅黑", Font.BOLD, 14));
+        registerButton.setPreferredSize(new Dimension(120, 35));
+        registerButton.setBackground(new Color(70, 130, 180));
+        registerButton.setForeground(Color.WHITE);
+        registerButton.setFocusPainted(false);
 
         int row = 0;
         gbc.gridx = 0; gbc.gridy = row++;
@@ -126,7 +168,8 @@ public class LoginPanel extends JPanel {
         gbc.gridx = 1;
         panel.add(phoneField, gbc);
 
-        gbc.gridx = 1; gbc.gridy = row++;
+        gbc.gridx = 0; gbc.gridy = row++;
+        gbc.gridwidth = 2;
         gbc.anchor = GridBagConstraints.CENTER;
         registerButton.addActionListener(e -> {
             String studentId = studentIdField.getText().trim();
@@ -157,15 +200,30 @@ public class LoginPanel extends JPanel {
 
     private JPanel createAdminLoginPanel() {
         JPanel panel = new JPanel(new GridBagLayout());
+        panel.setBackground(new Color(255, 255, 255));
+        panel.setBorder(BorderFactory.createEmptyBorder(40, 40, 40, 40));
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(10, 10, 10, 10);
+        gbc.insets = new Insets(15, 15, 15, 15);
         gbc.anchor = GridBagConstraints.WEST;
 
         JLabel adminIdLabel = new JLabel("工号：");
-        JTextField adminIdField = new JTextField(20);
+        adminIdLabel.setFont(new Font("微软雅黑", Font.PLAIN, 14));
+        JTextField adminIdField = new JTextField(25);
+        adminIdField.setFont(new Font("微软雅黑", Font.PLAIN, 14));
+        adminIdField.setPreferredSize(new Dimension(250, 30));
+        
         JLabel passwordLabel = new JLabel("密码：");
-        JPasswordField passwordField = new JPasswordField(20);
+        passwordLabel.setFont(new Font("微软雅黑", Font.PLAIN, 14));
+        JPasswordField passwordField = new JPasswordField(25);
+        passwordField.setFont(new Font("微软雅黑", Font.PLAIN, 14));
+        passwordField.setPreferredSize(new Dimension(250, 30));
+        
         JButton loginButton = new JButton("登录");
+        loginButton.setFont(new Font("微软雅黑", Font.BOLD, 14));
+        loginButton.setPreferredSize(new Dimension(120, 35));
+        loginButton.setBackground(new Color(70, 130, 180));
+        loginButton.setForeground(Color.WHITE);
+        loginButton.setFocusPainted(false);
 
         int row = 0;
         gbc.gridx = 0; gbc.gridy = row++;
@@ -178,7 +236,8 @@ public class LoginPanel extends JPanel {
         gbc.gridx = 1;
         panel.add(passwordField, gbc);
 
-        gbc.gridx = 1; gbc.gridy = row++;
+        gbc.gridx = 0; gbc.gridy = row++;
+        gbc.gridwidth = 2;
         gbc.anchor = GridBagConstraints.CENTER;
         loginButton.addActionListener(e -> {
             String adminId = adminIdField.getText().trim();
