@@ -450,24 +450,29 @@ public class StudentDashboardPanel extends JPanel {
         }
         final TimeSlot userTimeSlot = tempTimeSlot;
         
-        // 设置自定义渲染器，用于标红冲突的场地
+        // 设置自定义渲染器，用于标红冲突的场地和维护中的场地
         availableCourtsTable.setDefaultRenderer(Object.class, new javax.swing.table.DefaultTableCellRenderer() {
             @Override
             public java.awt.Component getTableCellRendererComponent(JTable table, Object value,
                     boolean isSelected, boolean hasFocus, int row, int column) {
                 super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
                 
-                // 获取该行的场地编号
+                // 获取该行的场地编号和状态
                 String courtId = (String) table.getValueAt(row, 0);
+                Object statusObj = table.getValueAt(row, 2);
+                
+                // 检查场地是否维护中
+                boolean isMaintenance = statusObj != null && 
+                    (statusObj.toString().equals("MAINTENANCE") || statusObj.toString().equals("UNAVAILABLE"));
                 
                 // 检查是否有时间段冲突
                 boolean hasConflict = false;
-                if (userTimeSlot != null && courtId != null) {
+                if (userTimeSlot != null && courtId != null && !isMaintenance) {
                     hasConflict = bookingService.isConflict(courtId, userTimeSlot);
                 }
                 
-                // 如果有冲突，标红显示
-                if (hasConflict) {
+                // 如果维护中或有冲突，标红显示
+                if (isMaintenance || hasConflict) {
                     setBackground(new Color(255, 200, 200)); // 淡红色背景
                     setForeground(new Color(180, 0, 0)); // 深红色文字
                 } else {
@@ -480,14 +485,22 @@ public class StudentDashboardPanel extends JPanel {
         });
         
         for (Court court : courts) {
-            // 检查是否有时间段冲突
+            // 检查场地是否维护中
+            boolean isMaintenance = court.getStatus() == CourtStatus.MAINTENANCE;
+            
+            // 检查是否有时间段冲突（仅在场地可用时检查）
             boolean hasConflict = false;
-            if (userTimeSlot != null) {
+            if (!isMaintenance && userTimeSlot != null) {
                 hasConflict = bookingService.isConflict(court.getCourtId(), userTimeSlot);
             }
             
-            // 如果有冲突，状态显示为 UNAVAILABLE，否则显示实际状态
-            Object statusDisplay = hasConflict ? "UNAVAILABLE" : court.getStatus();
+            // 如果维护中或有冲突，状态显示为 UNAVAILABLE；否则显示实际状态
+            Object statusDisplay;
+            if (isMaintenance || hasConflict) {
+                statusDisplay = "UNAVAILABLE";
+            } else {
+                statusDisplay = court.getStatus();
+            }
             
             availableCourtsModel.addRow(new Object[]{
                 court.getCourtId(),

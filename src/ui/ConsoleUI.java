@@ -11,9 +11,6 @@ import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Scanner;
 
-/**
- * 控制台交互界面
- */
 public class ConsoleUI {
     private Scanner scanner;
     private UserService userService;

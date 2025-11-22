@@ -52,5 +52,23 @@
     "fee": 30.00,
     "rating": 5,
     "createdAt": "2025-11-21T20:35:04.621036800"
+  },
+  {
+    "bookingId": "BKE9FEC5AD",
+    "student": {
+    "studentId": "111",
+    "name": "张三",
+    "phone": "19898767654"
+  },
+    "courtId": "C001",
+    "slot": {
+      "date": "2025-10-17",
+      "start": "12:00",
+      "end": "17:00"
+    },
+    "state": "CANCELLED",
+    "fee": 75.00,
+    "rating": 0,
+    "createdAt": "2025-11-22T11:30:26.219713300"
   }
 ]

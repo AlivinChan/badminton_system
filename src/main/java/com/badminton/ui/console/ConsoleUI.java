@@ -257,12 +257,25 @@ public class ConsoleUI {
     private void showMyBookings() {
         System.out.println("\n--- 我的预约 ---");
         Booking[] bookings = bookingService.getBookingsByStudent(currentStudent.getStudentId());
-        if (bookings.length == 0) {
+        
+        // 过滤掉已取消的预约
+        int validCount = 0;
+        for (Booking booking : bookings) {
+            if (booking.getState() != BookingState.CANCELLED) {
+                validCount++;
+            }
+        }
+        
+        if (validCount == 0) {
             System.out.println("暂无预约记录");
         } else {
             System.out.printf("%-12s %-8s %-15s %-20s %-10s %-8s %-6s%n",
                     "预约编号", "场地", "日期", "时段", "状态", "费用", "评分");
             for (Booking booking : bookings) {
+                // 过滤掉已取消的预约
+                if (booking.getState() == BookingState.CANCELLED) {
+                    continue;
+                }
                 System.out.printf("%-12s %-8s %-15s %-20s %-10s %-8.2f %-6s%n",
                         booking.getBookingId(),
                         booking.getCourtId(),
@@ -371,12 +384,25 @@ public class ConsoleUI {
     private void showAllBookings() {
         System.out.println("\n--- 所有预约 ---");
         Booking[] bookings = bookingService.getAllBookings();
-        if (bookings.length == 0) {
+        
+        // 过滤掉已取消的预约
+        int validCount = 0;
+        for (Booking booking : bookings) {
+            if (booking.getState() != BookingState.CANCELLED) {
+                validCount++;
+            }
+        }
+        
+        if (validCount == 0) {
             System.out.println("暂无预约记录");
         } else {
             System.out.printf("%-12s %-12s %-8s %-15s %-20s %-10s %-8s%n",
                     "预约编号", "学号", "场地", "日期", "时段", "状态", "费用");
             for (Booking booking : bookings) {
+                // 过滤掉已取消的预约
+                if (booking.getState() == BookingState.CANCELLED) {
+                    continue;
+                }
                 System.out.printf("%-12s %-12s %-8s %-15s %-20s %-10s %-8.2f%n",
                         booking.getBookingId(),
                         booking.getStudent().getStudentId(),
@@ -467,6 +493,14 @@ public class ConsoleUI {
     }
 
     /**
+     * 规范化时间字符串，将中文冒号转换为英文冒号
+     */
+    private String normalizeTimeString(String timeStr) {
+        if (timeStr == null) return null;
+        return timeStr.replace("：", ":"); // 将中文冒号（：）替换为英文冒号（:）
+    }
+
+    /**
      * 输入时段
      */
     private TimeSlot inputTimeSlot() throws DateTimeParseException {
@@ -475,11 +509,11 @@ public class ConsoleUI {
         LocalDate date = LocalDate.parse(dateStr, dateFormatter);
 
         System.out.print("请输入开始时间（HH:mm）：");
-        String startStr = scanner.nextLine().trim();
+        String startStr = normalizeTimeString(scanner.nextLine().trim());
         LocalTime start = LocalTime.parse(startStr, timeFormatter);
 
         System.out.print("请输入结束时间（HH:mm）：");
-        String endStr = scanner.nextLine().trim();
+        String endStr = normalizeTimeString(scanner.nextLine().trim());
         LocalTime end = LocalTime.parse(endStr, timeFormatter);
 
         return new TimeSlot(date, start, end);

@@ -391,11 +391,42 @@ public class AdminDashboardPanel extends JPanel {
     private void refreshCourts() {
         courtsModel.setRowCount(0);
         Court[] courts = courtService.getAllCourts();
+        
+        // 设置自定义渲染器，用于标红维护中的场地
+        courtsTable.setDefaultRenderer(Object.class, new javax.swing.table.DefaultTableCellRenderer() {
+            @Override
+            public java.awt.Component getTableCellRendererComponent(JTable table, Object value,
+                    boolean isSelected, boolean hasFocus, int row, int column) {
+                super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                
+                // 获取该行的状态
+                Object statusObj = table.getValueAt(row, 2);
+                
+                // 检查场地是否维护中
+                boolean isMaintenance = statusObj != null && 
+                    (statusObj.toString().equals("MAINTENANCE") || statusObj.toString().equals("UNAVAILABLE"));
+                
+                // 如果维护中，标红显示
+                if (isMaintenance) {
+                    setBackground(new Color(255, 200, 200)); // 淡红色背景
+                    setForeground(new Color(180, 0, 0)); // 深红色文字
+                } else {
+                    setBackground(new Color(173, 216, 230)); // 淡蓝色背景
+                    setForeground(Color.WHITE); // 白色文字
+                }
+                setOpaque(true);
+                return this;
+            }
+        });
+        
         for (Court court : courts) {
+            // 如果维护中，状态显示为 UNAVAILABLE，否则显示实际状态
+            Object statusDisplay = (court.getStatus() == CourtStatus.MAINTENANCE) ? "UNAVAILABLE" : court.getStatus();
+            
             courtsModel.addRow(new Object[]{
                 court.getCourtId(),
                 court.getType(),
-                court.getStatus()
+                statusDisplay
             });
         }
     }
